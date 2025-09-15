@@ -1,0 +1,79 @@
+
+#include<iostream>
+#include<algorithm>
+#include<vector>
+using namespace std;
+class heap {
+  public:
+  vector<int> arr;
+
+
+  void create(int index){
+      arr.push_back(index);
+      heapify(arr.size()-1);
+      
+  }
+  void heapify(int index){
+      int parent=(index-1)/2;
+      while(index>0 && arr[parent]<arr[index])
+      {
+          int temp=arr[parent];
+          arr[parent]=arr[index];
+          arr[index]=temp;
+          index=parent;
+          parent=(index-1)/2;
+          
+      }
+  }
+  
+  int  display(){
+          
+          int root=arr[0];
+          arr[0]=arr.back();
+          arr.pop_back();
+          heapifydown(0);
+          return root;
+}
+
+  void heapifydown(int index){
+       while(true){
+      int left=(2*index)+1;
+      int right=(2*index)+2;
+      int small=index;
+      if(left<arr.size() && arr[small]<arr[left]){
+          small=left;
+      }
+      if(right<arr.size() && arr[small]<arr[right]){
+          small=right;
+      }
+      if(small!=index){
+          int temp=arr[small];
+          arr[small]=arr[index];
+          arr[index]=temp;
+         index=small;
+      }
+       else{
+           break;
+       }
+   }
+ }
+};
+int main(){
+    int n;
+    cin>>n;
+    heap h;
+    for(int i=0;i<n;i++){
+        int data;
+        cin>>data;
+        h.create(data);
+    }
+    int k;
+    cin>>k;
+    int lar=-1;
+
+    for(int i=0;i<k;i++){
+        lar=h.display();
+    }
+    cout<<lar;
+    
+}
