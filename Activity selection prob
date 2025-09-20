@@ -1,0 +1,62 @@
+//input  :6
+match1
+1
+2
+match5
+3
+4
+match4
+0
+6
+match3
+5
+7
+match6
+8
+9
+match2
+5
+9
+
+output:Output 1 :
+Selected Activities are:
+match1 match5 match3 match6 
+
+
+
+#include<iostream>
+#include<iomanip>
+#include<algorithm>
+using namespace std;
+int main(){
+    int n;
+    cin>>n;
+    string str[n];
+    int start[n];
+    int end[n];
+    for(int i=0;i<n;i++){
+        cin>>str[i]>>start[i]>>end[i];
+    }
+    for(int i=0;i<n;i++){
+        for(int j=i+1;j<n;j++)
+        {
+            if(end[i]>end[j]){
+                swap(start[i],start[j]);
+                swap(end[i],end[j]);
+                swap(str[i],str[j]);
+                
+                
+            }
+        }
+    }
+    
+    int prev=end[0];
+    cout<<"Selected Activities are: "<<endl;
+    cout<<str[0]<<" ";
+    for(int i=0;i<n;i++){
+        if(prev<=start[i]){
+            cout<<str[i]<<" ";
+            prev=end[i];
+        }
+    }
+}
