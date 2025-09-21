@@ -1,0 +1,45 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+void helper(vector<vector<int>> &arr,string path,vector<vector<bool>> &visited,int r,int c,vector<string> &ans){
+    int a=arr.size();
+        if(  r<0 || c<0 ||r>=a||c>=a||arr[r][c]==0||visited[r][c] ){
+        return ;
+    }
+    if(r==a-1 && c==a-1){
+        ans.push_back(path);
+        return ;
+    }
+    visited[r][c]=true;
+    helper(arr,path+"D",visited,r+1,c,ans);
+    helper(arr,path+"L",visited,r,c-1,ans);
+    helper(arr,path+"R",visited,r,c+1,ans);
+    helper(arr,path+"U",visited,r-1,c,ans);
+    visited[r][c]=false;
+}
+void rat(vector<vector<int>> &arr,int n){
+    vector<string> ans;
+    string path="";
+    vector<vector<bool>> visited(n,vector<bool>(n,false));
+    helper(arr,path,visited,0,0,ans);
+    
+    if(ans.size()==0){
+        cout<<"-1";
+    }
+    for(int i=0;i<ans.size();i++){
+        cout<<ans[i]<<" ";
+    }
+    
+}
+int main(){
+    
+    int n;
+    cin>>n;
+    vector<vector<int>> arr(n,vector<int>(n));
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            cin>>arr[i][j];
+        }
+    }
+    rat(arr,n);
+}
