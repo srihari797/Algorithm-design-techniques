@@ -1,6 +1,7 @@
 #include<iostream>
 #include<algorithm>
 #include<iomanip>
+#include<vector>
 using namespace std;
 int main(){
     vector<int> weight;
@@ -33,16 +34,20 @@ int main(){
         }
     }
     double sum=0.0;
+    double fra;
     for(int i=0;i<n;i++){
         if(amt>weight[i]){
             sum+=value[i];
             amt=amt-weight[i];
         }
         else{
-            sum+=amt*((double)value[i]/weight[i]);
+            sum+=amt*per[i];
+            fra=(double)amt/weight[i];
+            fra=fra*100;
+            
             break;
         }
     }
-    cout<<"The maximum value of the current list is: "<<fixed<<setprecision(2)<<sum;
-    
+    cout<<"The maximum value of the current list is: "<<fixed<<setprecision(2)<<sum<<endl;
+    cout<<fra;
 }
