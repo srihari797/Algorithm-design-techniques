@@ -1,0 +1,65 @@
+//inpInput 1 :
+4
+0 1 1 1
+1 0 1 0
+1 1 0 1
+1 0 1 0
+3
+
+
+op:
+Output 1 :
+1 2 3 2 
+
+
+
+#include<iostream>
+#include<vector>
+using namespace std;
+bool check(vector<vector<int>> &graph,int V,int v,vector<int> &colour,int clr){
+    for(int j=0;j<V;j++){
+        if(graph[v][j]==1 && colour[j]==clr){
+            return false;
+        }
+    }
+    return true;
+}
+bool fun(vector<vector<int>> &graph,int V,int v,vector<int> &colour,int maxc){
+    if(v==V){
+        return true;
+    }
+    for(int clr=1;clr<=maxc;clr++){
+        if(check(graph,V,v,colour,clr)){
+            colour[v]=clr;
+        
+            if(fun(graph,V,v+1,colour,maxc)){
+                return true;
+            }
+            colour[v]=0;
+    }
+    }
+    return false;
+}
+
+int main(){
+    int V;
+    cin>>V;
+    vector<vector<int>> graph(V,vector<int>(V,0));
+    vector<int> colour(V,0);
+    for(int i=0;i<V;i++){
+        for(int j=0;j<V;j++){
+            cin>>graph[i][j];
+        }
+    }
+    int maxc;
+    cin>>maxc;
+    if(fun(graph,V,0,colour,maxc)){
+        for(int i=0;i<colour.size();i++){
+            cout<<colour[i]<<" ";
+        }
+    }
+    else{
+        cout<<"Solution does not exist";
+    }
+    
+}
