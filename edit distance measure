@@ -1,0 +1,38 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+int main(){
+    string str1;
+    string str2;
+    cin>>str1>>str2;
+    int ins,del,up;
+    cin>>ins>>del>>up;
+    int n = str1.length() + 1;
+    int m = str2.length() + 1;
+    vector<vector<int>> arr(n,vector<int>(m,0));
+    for(int i=0; i<n; i++){
+        arr[i][0] = i*del;
+    }
+    for(int i=0; i<m; i++){
+        arr[0][i] = i*ins;   
+    }
+
+    for(int i=1; i<n; i++){
+        for(int  j = 1 ; j<m ; j++){
+            if(str1[i-1] == str2[j-1]){
+                arr[i][j]=arr[i-1][j-1];
+
+                
+            }
+            else{
+                int d = arr[i - 1][j]+del;
+                int in = arr[i][j - 1]+ins;
+                int u = arr[i - 1][j - 1]+up;
+                int m2 = min({d , u , in});
+                arr[i][j] = m2;
+            }
+        }
+    }
+    cout<<arr[n - 1][m - 1];
+}
