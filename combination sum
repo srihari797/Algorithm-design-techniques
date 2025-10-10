@@ -1,0 +1,56 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+class Solution {
+public:
+    void rec(int index, vector<int> &ans, vector<int> &candidates, int target, int sum, vector<vector<int>> &re) {
+        if(sum > target) return;
+
+        if(index == candidates.size()) {
+            if(sum == target) re.push_back(ans);
+            return;
+        }
+
+        
+        ans.push_back(candidates[index]);
+        sum += candidates[index];
+        rec(index, ans, candidates, target, sum, re);
+
+        
+        ans.pop_back();
+        sum -= candidates[index];
+
+        
+        rec(index + 1, ans, candidates, target, sum, re);
+    }
+
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<int> ans;
+        vector<vector<int>> re;
+        rec(0, ans, candidates, target, 0, re);
+        return re;
+    }
+};
+
+int main() {
+    Solution sol;
+
+    // Manual input
+    vector<int> candidates = {1,2,3,4};
+    int target = 4;
+
+    vector<vector<int>> result = sol.combinationSum(candidates, target);
+
+    cout << "Combination Sum results:\n";
+    for(int i = 0; i < result.size(); i++) {
+    cout << "[ ";
+    for(int j = 0; j < result[i].size(); j++) {
+        cout << result[i][j] << " ";
+    }
+    cout << "]\n";
+}
+
+
+    return 0;
+}
