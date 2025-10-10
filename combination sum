@@ -2,55 +2,39 @@
 #include <vector>
 using namespace std;
 
-class Solution {
-public:
-    void rec(int index, vector<int> &ans, vector<int> &candidates, int target, int sum, vector<vector<int>> &re) {
-        if(sum > target) return;
-
-        if(index == candidates.size()) {
-            if(sum == target) re.push_back(ans);
-            return;
-        }
-
-        
-        ans.push_back(candidates[index]);
-        sum += candidates[index];
-        rec(index, ans, candidates, target, sum, re);
-
-        
-        ans.pop_back();
-        sum -= candidates[index];
-
-        
-        rec(index + 1, ans, candidates, target, sum, re);
+void combinationSumRec(int index, vector<int> &ans, vector<int> &candidates, int target, int sum, vector<vector<int>> &res) {
+    if(sum > target) return;
+    if(index == candidates.size()) {
+        if(sum == target) res.push_back(ans);
+        return;
     }
 
-    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
-        vector<int> ans;
-        vector<vector<int>> re;
-        rec(0, ans, candidates, target, 0, re);
-        return re;
-    }
-};
+    ans.push_back(candidates[index]);
+    sum += candidates[index];
+    combinationSumRec(index, ans, candidates, target, sum, res);
+    sum -= candidates[index];
+    ans.pop_back();
+
+    combinationSumRec(index + 1, ans, candidates, target, sum, res);
+}
 
 int main() {
-    Solution sol;
-
-    // Manual input
-    vector<int> candidates = {1,2,3,4};
+    vector<int> candidates = {1, 2, 3, 4};
     int target = 4;
 
-    vector<vector<int>> result = sol.combinationSum(candidates, target);
+    vector<int> ans;
+    vector<vector<int>> result;
+
+    combinationSumRec(0, ans, candidates, target, 0, result);
 
     cout << "Combination Sum results:\n";
     for(int i = 0; i < result.size(); i++) {
-    cout << "[ ";
-    for(int j = 0; j < result[i].size(); j++) {
-        cout << result[i][j] << " ";
+        cout << "[ ";
+        for(int j = 0; j < result[i].size(); j++) {
+            cout << result[i][j] << " ";
+        }
+        cout << "]\n";
     }
-    cout << "]\n";
-}
-
 
     return 0;
 }
