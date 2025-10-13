@@ -1,0 +1,41 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int dx[8] = {1, -1, 1, -1, 2, -2, 2, -2};
+int dy[8] = {2, 2, -2, -2, 1, 1, -1, -1};
+
+int bfs(int x, int y) {
+    queue<pair<int,int>> q;
+    map<pair<int,int>, int> dist;
+
+    q.push({0,0});
+    dist[{0,0}] = 0;
+
+    while (!q.empty()) {
+        auto [cx, cy] = q.front();
+        q.pop();
+
+        if (cx == x && cy == y) {
+            return dist[{cx,cy}];
+        }
+
+        for (int i = 0; i < 8; i++) {
+            int nx = cx + dx[i];
+            int ny = cy + dy[i];
+
+            if (dist.find({nx,ny}) == dist.end()) {
+                dist[{nx,ny}] = dist[{cx,cy}] + 1;
+                q.push({nx,ny});
+            }
+        }
+    }
+    return -1;
+}
+
+int main() {
+    int x, y;
+    cin >> x >> y;
+
+    cout << bfs(x,y) << endl;
+    return 0;
+}
