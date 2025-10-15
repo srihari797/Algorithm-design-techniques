@@ -1,0 +1,32 @@
+#include<iostream>
+#include<numeric>
+#include<vector>
+using namespace std;
+int main(){
+    int n;
+    cin>>n;
+    int arr[n];
+    for(int i=0;i<n;i++){
+        cin>>arr[i];
+    }
+    int op;
+    cin>>op;
+    for(int i=0;i<op;i++){
+        int l,r;
+        cin>>l>>r;
+        int m;
+        cin>>m;
+        vector<int> dp;
+        for(int i=l;i<=r;i++){
+            if(arr[i]%m==0){
+                dp.push_back(arr[i]);
+            }
+        }
+        int g=dp[0];
+        for(int i=1;i<dp.size();i++){
+            g=gcd(g,dp[i]);
+        }
+        cout<<g<<endl;
+        dp.clear();
+    }
+}
